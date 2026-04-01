@@ -6,11 +6,12 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    outDir: 'dist',
+    outDir: 'dist/build',
     lib: {
       entry: path.resolve(__dirname, 'src/lib/index.ts'),
-      formats: ['es', 'cjs'],
-      fileName: (format) => `math-visual-library.${format === 'es' ? 'js' : 'cjs'}`,
+      name: 'MathVisualLibrary',
+      formats: ['umd'],
+      fileName: () => `math-visual-library.umd.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom', 'motion/react', 'lucide-react'],

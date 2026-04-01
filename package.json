@@ -1,26 +1,30 @@
 {
   "name": "@stem-dev/math-visual-library",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
-  "main": "./dist/math-visual-library.umd.cjs",
+  "main": "./dist/math-visual-library.cjs",
   "module": "./dist/math-visual-library.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/math-visual-library.js",
-      "require": "./dist/math-visual-library.umd.cjs",
+      "require": "./dist/math-visual-library.cjs",
       "types": "./dist/index.d.ts"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/build"
   ],
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
+    "build:lib": "vite build --config vite.config.ts",
+    "build:umd": "vite build --config vite.umd.config.ts",
+    "build:demo": "vite build --config vite.demo.config.ts",
+    "build": "npm run clean && npm run build:lib && npm run build:umd && npm run build:demo",
     "preview": "vite preview",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist public",
     "lint": "tsc --noEmit"
   },
   "peerDependencies": {
