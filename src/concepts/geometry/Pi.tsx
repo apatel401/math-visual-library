@@ -5,6 +5,8 @@ import { useMathTheme } from '../../components/common/MathLibrary';
 interface PiContextType {
   progress: number;
   setProgress: (val: number) => void;
+  isAnimating: boolean;
+  setIsAnimating: (val: boolean) => void;
 }
 
 const PiContext = createContext<PiContextType | null>(null);
@@ -12,9 +14,10 @@ const PiContext = createContext<PiContextType | null>(null);
 export const PiVisualization = {
   Provider: ({ children }: { children: React.ReactNode }) => {
     const [progress, setProgress] = useState(0);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     return (
-      <PiContext.Provider value={{ progress, setProgress }}>
+      <PiContext.Provider value={{ progress, setProgress, isAnimating, setIsAnimating }}>
         {children}
       </PiContext.Provider>
     );
@@ -30,27 +33,71 @@ export const PiVisualization = {
   Controls: () => {
     const context = useContext(PiContext);
     if (!context) return null;
-    const { progress, setProgress } = context;
+    const { progress, setProgress, isAnimating, setIsAnimating } = context;
+
+    React.useEffect(() => {
+      let interval: any;
+      if (isAnimating) {
+        interval = setInterval(() => {
+          setProgress((prev) => {
+            if (prev >= 1) {
+              setIsAnimating(false);
+              return 1;
+            }
+            return Math.min(prev + 0.005, 1);
+          });
+        }, 16);
+      }
+      return () => clearInterval(interval);
+    }, [isAnimating, setIsAnimating, setProgress]);
 
     return (
       <div className="space-y-6">
+        <div className="flex gap-2">
+          <button 
+            onClick={() => {
+              if (progress >= 1) setProgress(0);
+              setIsAnimating(!isAnimating);
+            }}
+            className="flex-1 py-3 bg-math-accent text-white rounded-xl font-mono text-[10px] uppercase tracking-widest hover:opacity-90 transition-all flex items-center justify-center gap-2"
+          >
+            {isAnimating ? (
+              <>
+                <div className="w-2 h-2 bg-white rounded-sm" />
+                Pause
+              </>
+            ) : (
+              <>
+                <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1" />
+                {progress >= 1 ? 'Restart' : 'Unroll'}
+              </>
+            )}
+          </button>
+          <button 
+            onClick={() => {
+              setIsAnimating(false);
+              setProgress(0);
+            }}
+            className="px-4 py-3 bg-slate-100 text-slate-400 rounded-xl font-mono text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-colors"
+          >
+            Reset
+          </button>
+        </div>
+
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <label className="text-[10px] font-mono uppercase tracking-widest text-slate-400">Unroll Progress</label>
-            <span className="text-xs font-mono font-bold text-math-accent">{(progress * 100).toFixed(0)}%</span>
+            <label className="text-[10px] font-mono uppercase tracking-widest text-slate-400">Manual Progress</label>
+            <span className="text-xs font-mono font-bold text-math-accent">{(progress * 100).toFixed(1)}%</span>
           </div>
           <input 
-            type="range" min="0" max="1" step="0.01" value={progress} 
-            onChange={(e) => setProgress(parseFloat(e.target.value))}
-            className="w-full accent-math-accent"
+            type="range" min="0" max="1" step="0.001" value={progress} 
+            onChange={(e) => {
+              setIsAnimating(false);
+              setProgress(parseFloat(e.target.value));
+            }}
+            className="w-full accent-math-accent cursor-pointer"
           />
         </div>
-        <button 
-          onClick={() => setProgress(progress === 1 ? 0 : 1)}
-          className="w-full py-3 bg-slate-900 text-white rounded-xl font-mono text-[10px] uppercase tracking-widest hover:bg-slate-800 transition-all"
-        >
-          {progress === 1 ? 'Reset Circle' : 'Unroll Circle'}
-        </button>
       </div>
     );
   },
@@ -61,12 +108,13 @@ export const PiVisualization = {
     if (!context) return null;
     const { progress } = context;
 
-    const radius = 50;
+    const radius = 60;
     const diameter = radius * 2;
     const circumference = 2 * Math.PI * radius;
-    const size = 500;
-    const centerY = 200;
-    const startX = 100;
+    const size = 600;
+    const centerY = size / 2;
+    const startX = 80;
+    const groundY = centerY + radius;
 
     // The circle rolls to the right
     const currentX = startX + progress * circumference;
@@ -74,60 +122,124 @@ export const PiVisualization = {
 
     return (
       <div className="relative w-full h-full flex items-center justify-center p-12">
-        <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full max-w-2xl overflow-visible">
-          {/* Ruler */}
-          <g transform={`translate(${startX}, ${centerY + radius + 20})`}>
-            <line x1="0" y1="0" x2={circumference + 50} y2="0" stroke="#94a3b8" strokeWidth="1" />
+        <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full max-w-3xl overflow-visible">
+          {/* Grid Background */}
+          <g stroke="#f1f5f9" strokeWidth="1">
+            {Array.from({ length: 13 }).map((_, i) => (
+              <line key={`v-${i}`} x1={i * 50} y1="0" x2={i * 50} y2={size} />
+            ))}
+            {Array.from({ length: 13 }).map((_, i) => (
+              <line key={`h-${i}`} x1="0" y1={i * 50} x2={size} y2={i * 50} />
+            ))}
+          </g>
+
+          {/* Ruler / Ground */}
+          <g transform={`translate(${startX}, ${groundY})`}>
+            <line x1="0" y1="0" x2={circumference + 100} y2="0" stroke="#94a3b8" strokeWidth="2" />
             {/* Diameter markers */}
             {[0, 1, 2, 3, Math.PI].map((val) => (
               <g key={val} transform={`translate(${val * diameter}, 0)`}>
-                <line x1="0" y1="0" x2="0" y2="10" stroke="#94a3b8" strokeWidth="1" />
-                <text y="25" textAnchor="middle" className="text-[10px] font-mono fill-slate-400">
+                <line x1="0" y1="0" x2="0" y2="15" stroke="#94a3b8" strokeWidth="2" />
+                <text y="30" textAnchor="middle" className="text-[12px] font-mono font-bold fill-slate-400">
                   {val === Math.PI ? 'πd' : `${val}d`}
                 </text>
+                {val === Math.PI && (
+                  <text y="45" textAnchor="middle" className="text-[10px] font-mono fill-math-accent">
+                    ≈ 3.14159...
+                  </text>
+                )}
               </g>
             ))}
           </g>
 
-          {/* Unrolled Path */}
+          {/* Unrolled Path (The line on the ground) */}
           <motion.line
             x1={startX}
-            y1={centerY + radius}
+            y1={groundY}
             x2={currentX}
-            y2={centerY + radius}
+            y2={groundY}
             stroke={colorTheme}
-            strokeWidth="3"
+            strokeWidth="4"
+            strokeLinecap="round"
             initial={false}
             animate={{ x2: currentX }}
+            transition={{ type: "tween", ease: "linear", duration: 0.02 }}
           />
 
-          {/* Rolling Circle */}
+          {/* Rolling Circle Group */}
           <motion.g
             initial={false}
-            animate={{ x: currentX, rotate: rotation }}
-            style={{ originX: `${currentX}px`, originY: `${centerY}px` }}
+            animate={{ x: currentX, y: centerY }}
+            transition={{ type: "tween", ease: "linear", duration: 0.02 }}
           >
-            {/* The Circle */}
-            <circle
+            {/* The Unrolling Part of the Circle (Remaining Perimeter) */}
+            {/* Moved outside rotation group to stay aligned with the ground contact point */}
+            <motion.circle
               cx="0"
               cy="0"
               r={radius}
               fill="none"
               stroke={colorTheme}
-              strokeWidth="3"
-              strokeDasharray={circumference}
-              strokeDashoffset={progress * circumference}
-              transform="rotate(-90)"
+              strokeWidth="4"
+              strokeDasharray={`${(1 - progress) * circumference} ${circumference}`}
+              strokeDashoffset={0}
+              transform="rotate(90)"
+              style={{ strokeLinecap: 'round' }}
+              initial={false}
+              animate={{ strokeDasharray: `${(1 - progress) * circumference} ${circumference}` }}
+              transition={{ type: "tween", ease: "linear", duration: 0.02 }}
             />
-            {/* Radius Line to show rotation */}
-            <line x1="0" y1="0" x2="0" y2={radius} stroke={colorTheme} strokeWidth="2" opacity="0.5" />
-            {/* Point on circumference */}
-            <circle cx="0" cy={radius} r="4" fill={colorTheme} />
+
+            {/* Rotation Group (Spokes and Markers) */}
+            <motion.g
+              animate={{ rotate: rotation }}
+              transition={{ type: "tween", ease: "linear", duration: 0.02 }}
+            >
+              {/* The Circle Perimeter (Ghost) */}
+              <circle
+                cx="0"
+                cy="0"
+                r={radius}
+                fill="white"
+                fillOpacity="0.1"
+                stroke="#e2e8f0"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+              />
+              
+              {/* Spokes for visual rotation */}
+              {Array.from({ length: 8 }).map((_, i) => (
+                <line
+                  key={i}
+                  x1="0"
+                  y1="0"
+                  x2={radius * Math.cos((i * Math.PI) / 4)}
+                  y2={radius * Math.sin((i * Math.PI) / 4)}
+                  stroke="#e2e8f0"
+                  strokeWidth="1"
+                  opacity="0.3"
+                />
+              ))}
+
+              {/* Radius Line to the original contact point */}
+              <line x1="0" y1="0" x2="0" y2={radius} stroke={colorTheme} strokeWidth="2" strokeDasharray="2 2" />
+              
+              {/* Center Point */}
+              <circle cx="0" cy="0" r="3" fill="#94a3b8" />
+              
+              {/* Original Contact Point on Circle (P) */}
+              <circle cx="0" cy={radius} r="5" fill={colorTheme} stroke="white" strokeWidth="2" />
+            </motion.g>
+
+            {/* Label following the circle */}
+            <text y={-radius - 15} textAnchor="middle" className="text-[12px] font-mono font-bold fill-slate-900">
+              d = {diameter}
+            </text>
           </motion.g>
 
-          {/* Labels */}
-          <text x={startX} y={centerY - radius - 20} className="text-[12px] font-serif italic fill-slate-900">
-            Circumference = π × d ≈ 3.14159...
+          {/* Pi Label */}
+          <text x={startX + circumference / 2} y={centerY - radius - 50} textAnchor="middle" className="text-[16px] font-serif italic fill-slate-900">
+            Circumference = π × d
           </text>
         </svg>
       </div>

@@ -12,6 +12,8 @@ interface UnitCircleContextType {
   sin: number;
   tan: number;
   scale: number;
+  isAnimating: boolean;
+  setIsAnimating: (val: boolean) => void;
 }
 
 const UnitCircleContext = createContext<UnitCircleContextType | null>(null);
@@ -34,6 +36,7 @@ const fastTransition = {
 export const UnitCircle = {
   Provider: ({ children }: { children: React.ReactNode }) => {
     const [angle, setAngle] = useState(45);
+    const [isAnimating, setIsAnimating] = useState(false);
     const scale = 150; // Radius of the unit circle in pixels
 
     const radians = useMemo(() => angle * (Math.PI / 180), [angle]);
@@ -46,7 +49,7 @@ export const UnitCircle = {
     }, [sin, cos]);
 
     return (
-      <UnitCircleContext.Provider value={{ angle, setAngle, radians, cos, sin, tan, scale }}>
+      <UnitCircleContext.Provider value={{ angle, setAngle, radians, cos, sin, tan, scale, isAnimating, setIsAnimating }}>
         {children}
       </UnitCircleContext.Provider>
     );
@@ -65,9 +68,52 @@ export const UnitCircle = {
   ),
 
   Controls: () => {
-    const { angle, setAngle } = useUnitCircle();
+    const { angle, setAngle, isAnimating, setIsAnimating } = useUnitCircle();
+
+    React.useEffect(() => {
+      let interval: any;
+      if (isAnimating) {
+        interval = setInterval(() => {
+          setAngle((prev) => {
+            let next = prev + 1;
+            if (next >= 360) next = 0;
+            return next;
+          });
+        }, 16);
+      }
+      return () => clearInterval(interval);
+    }, [isAnimating, setAngle]);
+
     return (
       <div className="space-y-8">
+        <div className="flex gap-2">
+          <button 
+            onClick={() => setIsAnimating(!isAnimating)}
+            className="flex-1 py-3 bg-math-accent text-white rounded-xl font-mono text-[10px] uppercase tracking-widest hover:opacity-90 transition-all flex items-center justify-center gap-2"
+          >
+            {isAnimating ? (
+              <>
+                <div className="w-2 h-2 bg-white rounded-sm" />
+                Pause
+              </>
+            ) : (
+              <>
+                <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1" />
+                Play
+              </>
+            )}
+          </button>
+          <button 
+            onClick={() => {
+              setIsAnimating(false);
+              setAngle(0);
+            }}
+            className="px-4 py-3 bg-slate-100 text-slate-400 rounded-xl font-mono text-[10px] uppercase tracking-widest hover:bg-slate-200 transition-colors"
+          >
+            Reset
+          </button>
+        </div>
+
         <div className="space-y-4">
           <div className="flex justify-between items-end">
             <label className="font-mono text-xs uppercase tracking-widest text-slate-500 flex items-center gap-2">
@@ -77,7 +123,10 @@ export const UnitCircle = {
           </div>
           <input 
             type="range" min="0" max="360" step="1" value={angle} 
-            onChange={(e) => setAngle(parseFloat(e.target.value))}
+            onChange={(e) => {
+              setIsAnimating(false);
+              setAngle(parseFloat(e.target.value));
+            }}
             className="w-full"
           />
         </div>

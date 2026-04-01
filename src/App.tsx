@@ -37,9 +37,9 @@ export default function App() {
   };
 
   const usageCode = `// 1. Install the library
-// npm install @math-visual-library
+// npm install @stem-dev/math-visual-library
 
-import { MathLibrary, ${getConceptName()} } from '@math-visual-library';
+import { MathLibrary, ${getConceptName()} } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -302,7 +302,7 @@ function App() {
           </div>
           <div className="flex items-center gap-6">
             <a href="#" className="text-[10px] font-mono uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">Documentation</a>
-            <a href="#" className="text-[10px] font-mono uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1">
+            <a href="https://github.com/apatel401/math-visual-library" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1">
               <Github className="w-3 h-3" /> GitHub
             </a>
           </div>

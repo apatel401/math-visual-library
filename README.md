@@ -1,18 +1,22 @@
-# @math-visual-library
+# @stem-dev/math-visual-library
 
 An interactive, highly customizable React library for mathematical visualizations. Built with a "Hardware Specialist" aesthetic, featuring smooth animations and real-time interactive controls.
+
+[View on GitHub](https://github.com/apatel401/math-visual-library)
 
 ## 🚀 Features
 
 - **Compound Component Architecture**: Highly modular and flexible layout.
+- **Advanced Quadratic Visuals**: Real-time parabola updates with vertex tracking, discriminant analysis, and root labeling.
 - **Customizable Themes**: Dynamic `colorTheme` prop to match your application's branding.
 - **Smooth Animations**: Powered by `motion` (framer-motion) for snappier, responsive geometric updates.
+- **Integrated UI**: Collapsible sidebar with synchronized layout shifts and top-right theory toggles.
 - **Technical Aesthetic**: Clean, grid-based design with monospace typography.
 
 ## 📦 Installation
 
 ```bash
-npm install @math-visual-library
+npm install @stem-dev/math-visual-library
 ```
 
 ## 🛠 Usage
@@ -20,7 +24,7 @@ npm install @math-visual-library
 ### Pythagoras Theorem Visualizer
 
 ```tsx
-import { MathLibrary, Pythagoras } from '@math-visual-library';
+import { MathLibrary, Pythagoras } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -45,7 +49,7 @@ function App() {
 ### Unit Circle Visualizer
 
 ```tsx
-import { MathLibrary, UnitCircle } from '@math-visual-library';
+import { MathLibrary, UnitCircle } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -71,7 +75,7 @@ function App() {
 Understand how coefficients change the shape of a parabola ($y = ax^2 + bx + c$).
 
 ```tsx
-import { MathLibrary, Quadratic } from '@math-visual-library';
+import { MathLibrary, Quadratic } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -96,7 +100,7 @@ function App() {
 Visualize the slope of a tangent line at any point on a curve.
 
 ```tsx
-import { MathLibrary, Calculus } from '@math-visual-library';
+import { MathLibrary, Calculus } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -121,7 +125,7 @@ function App() {
 Understand Mean and Standard Deviation through the Bell Curve.
 
 ```tsx
-import { MathLibrary, NormalDistribution } from '@math-visual-library';
+import { MathLibrary, NormalDistribution } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -146,7 +150,7 @@ function App() {
 Explore recursion and self-similarity in fractal geometry.
 
 ```tsx
-import { MathLibrary, Sierpinski } from '@math-visual-library';
+import { MathLibrary, Sierpinski } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -171,7 +175,7 @@ function App() {
 Simulate parabolic trajectories with gravity and velocity.
 
 ```tsx
-import { MathLibrary, Projectile } from '@math-visual-library';
+import { MathLibrary, Projectile } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
@@ -196,7 +200,7 @@ function App() {
 Watch a circle unroll to see the relationship between C and d.
 
 ```tsx
-import { MathLibrary, PiVisualization } from '@math-visual-library';
+import { MathLibrary, PiVisualization } from '@stem-dev/math-visual-library';
 
 function App() {
   return (
