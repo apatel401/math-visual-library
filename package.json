@@ -1,7 +1,10 @@
 {
-  "name": "@stem-dev/math-visual-library",
+  "name": "@stem_dev/math-visual-library",
   "private": false,
   "version": "1.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./dist/math-visual-library.cjs",
   "module": "./dist/math-visual-library.js",

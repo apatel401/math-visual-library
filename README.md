@@ -1,4 +1,4 @@
-# @stem-dev/math-visual-library
+# @stem_dev/math-visual-library
 
 An interactive, highly customizable React library for mathematical visualizations. Built with a "Hardware Specialist" aesthetic, featuring smooth animations and real-time interactive controls.
 
@@ -16,7 +16,7 @@ An interactive, highly customizable React library for mathematical visualization
 ## 📦 Installation
 
 ```bash
-npm install @stem-dev/math-visual-library
+npm install @stem_dev/math-visual-library
 ```
 
 ## 🛠 Usage
@@ -24,7 +24,7 @@ npm install @stem-dev/math-visual-library
 ### Pythagoras Theorem Visualizer
 
 ```tsx
-import { MathLibrary, Pythagoras } from '@stem-dev/math-visual-library';
+import { MathLibrary, Pythagoras } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -49,7 +49,7 @@ function App() {
 ### Unit Circle Visualizer
 
 ```tsx
-import { MathLibrary, UnitCircle } from '@stem-dev/math-visual-library';
+import { MathLibrary, UnitCircle } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -75,7 +75,7 @@ function App() {
 Understand how coefficients change the shape of a parabola ($y = ax^2 + bx + c$).
 
 ```tsx
-import { MathLibrary, Quadratic } from '@stem-dev/math-visual-library';
+import { MathLibrary, Quadratic } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -100,7 +100,7 @@ function App() {
 Visualize the slope of a tangent line at any point on a curve.
 
 ```tsx
-import { MathLibrary, Calculus } from '@stem-dev/math-visual-library';
+import { MathLibrary, Calculus } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -125,7 +125,7 @@ function App() {
 Understand Mean and Standard Deviation through the Bell Curve.
 
 ```tsx
-import { MathLibrary, NormalDistribution } from '@stem-dev/math-visual-library';
+import { MathLibrary, NormalDistribution } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -150,7 +150,7 @@ function App() {
 Explore recursion and self-similarity in fractal geometry.
 
 ```tsx
-import { MathLibrary, Sierpinski } from '@stem-dev/math-visual-library';
+import { MathLibrary, Sierpinski } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -175,7 +175,7 @@ function App() {
 Simulate parabolic trajectories with gravity and velocity.
 
 ```tsx
-import { MathLibrary, Projectile } from '@stem-dev/math-visual-library';
+import { MathLibrary, Projectile } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -200,7 +200,7 @@ function App() {
 Watch a circle unroll to see the relationship between C and d.
 
 ```tsx
-import { MathLibrary, PiVisualization } from '@stem-dev/math-visual-library';
+import { MathLibrary, PiVisualization } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -226,6 +226,53 @@ function App() {
 - `src/components/common/`: Shared layout components (`Root`, `Sidebar`, `Display`).
 - `src/concepts/`: Individual math concepts (e.g., `pythagoras/`).
 - `src/lib/`: Library entry point and exports.
+
+## 🏗 Build & Development
+
+The project uses a multi-target build system:
+
+- **ESM/CJS Build**: Main library files located in `/dist`.
+- **UMD Build**: Universal module definition in `/dist/build/` (excluded from npm package).
+- **Demo Site**: A full React demo application built into the `/public` folder.
+
+### Build Commands
+
+```bash
+# Build everything (Lib, UMD, and Demo)
+npm run build
+
+# Build only the library (ESM/CJS)
+npm run build:lib
+
+# Build only the UMD version
+npm run build:umd
+
+# Build the demo site
+npm run build:demo
+```
+
+## 🚀 Publishing to npm
+
+To publish this scoped package to npm, ensure you are logged in and use the `--access public` flag (or ensure `publishConfig` is set in `package.json`):
+
+```bash
+# Ensure you are logged in
+npm login
+
+# Build the library
+npm run build
+
+# Publish as a public scoped package
+npm publish --access public
+```
+
+### ❓ Troubleshooting: "Scope not found"
+If you get an error like `404 Not Found - Scope not found`, it means the `@stem_dev` organization does not exist on npm or you aren't a member. 
+
+**To fix this:**
+1. Run `npm whoami` to get your username.
+2. Change the name in `package.json` from `@stem_dev/math-visual-library` to `@your-username/math-visual-library`.
+3. Run `npm publish --access public` again.
 
 ## 🎨 Customization
 

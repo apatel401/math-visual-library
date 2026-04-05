@@ -8,7 +8,7 @@ import { NormalDistribution } from './concepts/statistics/NormalDistribution';
 import { Sierpinski } from './concepts/fractals/Sierpinski';
 import { Projectile } from './concepts/physics/Projectile';
 import { PiVisualization } from './concepts/geometry/Pi';
-import { Code, Copy, Check, Layers, ArrowLeft, ExternalLink, Github, BookOpen, PlayCircle, FunctionSquare, TrendingUp, BarChart2, Triangle, Wind, Circle } from 'lucide-react';
+import { Code, Copy, Check, Layers, ArrowLeft, GitHub, BookOpen, PlayCircle, FunctionSquare, TrendingUp, BarChart2, Triangle, Wind, Circle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 type Page = 'landing' | 'pythagoras' | 'unit-circle' | 'quadratic' | 'calculus' | 'normal-dist' | 'sierpinski' | 'projectile' | 'pi';
@@ -37,9 +37,9 @@ export default function App() {
   };
 
   const usageCode = `// 1. Install the library
-// npm install @stem-dev/math-visual-library
+// npm install @stem_dev/math-visual-library
 
-import { MathLibrary, ${getConceptName()} } from '@stem-dev/math-visual-library';
+import { MathLibrary, ${getConceptName()} } from '@stem_dev/math-visual-library';
 
 function App() {
   return (
@@ -248,7 +248,7 @@ function App() {
 
   const renderCodeSnippet = () => (
     <>
-      <button 
+      <button
         onClick={() => setShowCode(!showCode)}
         className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-slate-400 hover:text-math-accent transition-colors group"
       >
@@ -258,7 +258,7 @@ function App() {
 
       <AnimatePresence>
         {showCode && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -267,7 +267,7 @@ function App() {
             <pre className="p-4 bg-slate-900 rounded-lg text-[10px] font-mono text-slate-300 overflow-x-auto border border-slate-800 shadow-inner">
               {usageCode}
             </pre>
-            <button 
+            <button
               onClick={copyToClipboard}
               className="absolute top-2 right-2 p-1.5 bg-slate-800 hover:bg-slate-700 rounded border border-slate-700 text-slate-400 transition-all opacity-0 group-hover:opacity-100"
             >
@@ -311,14 +311,14 @@ function App() {
         {/* Hero Section */}
         <main className="pt-32 px-8 max-w-7xl mx-auto">
           <div className="max-w-3xl mb-24">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-600 rounded-full border border-blue-100 mb-8"
             >
               <span className="text-[10px] font-mono font-bold uppercase tracking-widest">Version 2.3.0 Available</span>
             </motion.div>
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -327,7 +327,7 @@ function App() {
               Interactive Math <br />
               <span className="text-blue-600">Visual Library</span>
             </motion.h1>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -335,7 +335,7 @@ function App() {
             >
               A professional React library for Math Education. Beautiful, interactive, and highly customizable visualizations for complex mathematical concepts.
             </motion.p>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -353,7 +353,7 @@ function App() {
           {/* Concept Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
             {/* Pythagoras Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('pythagoras')}
@@ -372,7 +372,7 @@ function App() {
             </motion.div>
 
             {/* Unit Circle Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('unit-circle')}
@@ -391,7 +391,7 @@ function App() {
             </motion.div>
 
             {/* Quadratic Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('quadratic')}
@@ -410,7 +410,7 @@ function App() {
             </motion.div>
 
             {/* Calculus Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('calculus')}
@@ -428,7 +428,7 @@ function App() {
               </div>
             </motion.div>
             {/* Normal Distribution Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('normal-dist')}
@@ -448,7 +448,7 @@ function App() {
 
 
             {/* Sierpinski Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('sierpinski')}
@@ -467,7 +467,7 @@ function App() {
             </motion.div>
 
             {/* Projectile Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('projectile')}
@@ -486,7 +486,7 @@ function App() {
             </motion.div>
 
             {/* Pi Card */}
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8 }}
               className="group bg-white rounded-3xl border border-slate-200 p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-100 transition-all cursor-pointer overflow-hidden relative"
               onClick={() => setPage('pi')}
@@ -523,7 +523,7 @@ function App() {
   return (
     <div className="relative">
       {/* Back to Landing Button */}
-      <button 
+      <button
         onClick={() => setPage('landing')}
         className="fixed top-6 left-6 z-[100] flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-[10px] font-mono uppercase tracking-widest text-slate-500 hover:text-slate-900 hover:shadow-lg transition-all group"
       >
