@@ -8,7 +8,7 @@ import { NormalDistribution } from './concepts/statistics/NormalDistribution';
 import { Sierpinski } from './concepts/fractals/Sierpinski';
 import { Projectile } from './concepts/physics/Projectile';
 import { PiVisualization } from './concepts/geometry/Pi';
-import { Code, Copy, Check, Layers, ArrowLeft, GitHub, BookOpen, PlayCircle, FunctionSquare, TrendingUp, BarChart2, Triangle, Wind, Circle } from 'lucide-react';
+import { Code, Copy, Check, Layers, ArrowLeft, GitBranch, BookOpen, PlayCircle, FunctionSquare, TrendingUp, BarChart2, Triangle, Wind, Circle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 type Page = 'landing' | 'pythagoras' | 'unit-circle' | 'quadratic' | 'calculus' | 'normal-dist' | 'sierpinski' | 'projectile' | 'pi';
@@ -303,7 +303,7 @@ function App() {
           <div className="flex items-center gap-6">
             <a href="#" className="text-[10px] font-mono uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">Documentation</a>
             <a href="https://github.com/apatel401/math-visual-library" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors flex items-center gap-1">
-              <Github className="w-3 h-3" /> GitHub
+              <GitBranch className="w-3 h-3" /> GitHub
             </a>
           </div>
         </nav>
